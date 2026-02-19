@@ -1,5 +1,5 @@
 // This code will take the variable cart of cart.js and we use this file path to access it
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import { products } from '../data/products.js';
 // const products =[{
 //     image:'images/products/athletic-cotton-socks-6-pairs.jpg',
@@ -93,32 +93,22 @@ console.log(productsHTML);
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
- button.addEventListener('click',()=>{
-  const productid = button.dataset.productid;
 
-   let matchingItem;
 
-  cart.forEach((item)=>{
-    if(productid === item.productid){
-      matching =item;
-    }
-  });
-  if (matchingItem){
-    matchingItem.quantity+=1;
-  } else{
-    cart.push({
-    productid:productid,
-    quantity:1
-   });
-  }
-//   a variable to store total quantity
+function updateCartQuantity(){
+ //   a variable to store total quantity
 let cartQuantity =0;
-   cart.forEach((item)=>{
-  cartQuantity += item.quantity;
+
+  cart.forEach((cartItem)=>{
+  cartQuantity += cartItem.quantity;
    });
    document.querySelector('.js-cart-quantity').innerHTML=cartQuantity
-
-})
-})
- 
+}
+document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+ button.addEventListener('click',()=>{
+  const productId = button.dataset.productId;
+  addToCart(productId);
+  updateCartQuantity();
+  });
+});
+  
