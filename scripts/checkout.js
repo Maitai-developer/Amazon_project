@@ -1,12 +1,13 @@
  import {cart} from '../data/cart.js';
  import { products } from '../data/products.js';    
+ import { formatCurrency } from './utils/money.js';
 // create a variable for results
  let cartSummaryHTML='';
  cart.forEach((cartItem)=>{
-    const productId = cartItem.productId;
+    // const productId = cartItem.productId;
     let matchingProduct ;
     products.forEach((product) =>{
-   if (product.id === productId){
+   if (product.id === cartItem.productId){
     matchingProduct = product;
    }
     });
@@ -26,7 +27,7 @@
         ${matchingProduct.name}
     </div>
     <div class="product-price">
-        $${matchingProduct.priceCents/100}
+        $${(formatCurrency)(matchingProduct.priceCents)}
     </div>
     <div class="product-quantity">
         <span>
@@ -45,10 +46,8 @@
     <div class="delivery-options-title">
         Choose a delivery option:
     </div>
-    <div class="delivery-option">
-        <input type="radio" checked
-        class="delivery-option-input"
-        name="delivery-option-1">
+    <div class="delivery-option"><input type="radio" 
+    checked class="delivery-option-input"  name="delivery-option-">    
         <div>
         <div class="delivery-option-date">
             Tuesday, June 21
@@ -61,7 +60,7 @@
     <div class="delivery-option">
         <input type="radio"
         class="delivery-option-input"
-        name="delivery-option-1">
+        name="delivery-option-${matchingProduct.id}">
         <div>
         <div class="delivery-option-date">
             Wednesday, June 15
@@ -74,21 +73,23 @@
     <div class="delivery-option">
         <input type="radio"
         class="delivery-option-input"
-        name="delivery-option-1">
+        name="delivery-option-${matchingProduct.id}">
         <div>
         <div class="delivery-option-date">
             Monday, June 13
         </div>
         <div class="delivery-option-price">
             $9.99 - Shipping
+                  
+                </div>
+            </div>
+           </div>
         </div>
-        </div>
     </div>
-    </div>
-    </div>
-    </div>
+           
+    
 `;
  });
 
  document.querySelector('.js-order-summary').innerHTML=cartSummaryHTML
- console.log(cartSummaryHTML)
+//  console.log(cartSummaryHTML)

@@ -1,4 +1,5 @@
 // This code will take the variable cart of cart.js and we use this file path to access it
+import { formatCurrency } from './utils/money.js';
 import {cart, addToCart} from '../data/cart.js';
 import { products } from '../data/products.js';
 // const products =[{
@@ -57,7 +58,7 @@ products.forEach((product)=>{
     </div>
 
     <div class="product-price">
-    $${(product.priceCents / 100).toFixed(2)}
+    $${formatCurrency(product.priceCents )}
     </div>
 
     <div class="product-quantity-container">
