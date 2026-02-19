@@ -1,3 +1,5 @@
+// This code will take the variable cart of cart.js and we use this file path to access it
+import {cart} from '../data/cart.js';
 // const products =[{
 //     image:'images/products/athletic-cotton-socks-6-pairs.jpg',
 //     name :'Black and Gray Athletic Cotton Socks - 6 Pairs',
