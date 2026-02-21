@@ -48,7 +48,7 @@ let matchingItem;
 
   saveTOStorage()
 }
-  export function updateDeliveryOPtion(productId,deliveryOptionsId){
+  export function updateDeliveryOption(productId,deliveryOptionsId){
   let matchingItem;
 
  cart.forEach((cartItem)=>{
