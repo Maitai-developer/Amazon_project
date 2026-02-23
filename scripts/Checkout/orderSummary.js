@@ -1,9 +1,10 @@
  import {cart,removeFromCart,updateDeliveryOption} from '../../data/cart.js';
- import { products } from '../../data/products.js';    
+ import { products,getProduct} from '../../data/products.js';
+//  import { products } from '../../data/products.js';    
  import { formatCurrency } from '../utils/money.js';
  import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
  import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
- import {deliveryOptions}from '../../data/deliveryOptions.js'
+ import {deliveryOptions,getDeliveryOption}from '../../data/deliveryOptions.js'
 
 
  hello()
@@ -13,29 +14,21 @@ const deliveryDate=today.add(7,'days')
 // create a variable for results
 
  export function renderOrderSummary(){
-
  let cartSummaryHTML='';
  cart.forEach((cartItem)=>{
-    // const productId = cartItem.productId;
- let matchingProduct ;
-    products.forEach((product) =>{
-   if (product.id === cartItem.productId){
-    matchingProduct = product;
-   }
-    });
 
-    const deliveryOptionsId =cartItem.deliveryOptionsId
+    const productId = cartItem.productId;
+    // We are not updating this varible thats why we changed it from let to const
+    const matchingProduct=getProduct(productId)
 
- let deliveryOption;
+    const deliveryOptionId = cartItem.deliveryOptionId
+ 
+const deliveryOption= getDeliveryOption(deliveryOptionId)
 
-    deliveryOptions.forEach((option)=>{
-     if(option.id === deliveryOptionsId){
-        deliveryOption=option
-     }
-    })
+    
     const today =dayjs();
     const deliveryDate=today.add(
-        deliveryOption.deliveryDays,
+        // deliveryOption.deliveryDays,
         'days'
     )
     const dateString =deliveryDate.format(
@@ -99,8 +92,8 @@ const deliveryDate=today.add(7,'days')
     const priceString = deliveryOption.priceCents===0
      ? 'FREE'
      : `$${formatCurrency(deliveryOption.priceCents) } `
-    //  when deliveryOptionId is changed deliveryOptionsId the radio selector works i dont know how
-     const isChecked = deliveryOption.id === cartItem.deliveryOptionsId;
+    //  when deliveryOptionId is changed to deliveryOptionsId the radio selector works i dont know how
+     const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
      html +=
   `
@@ -134,7 +127,6 @@ document.querySelectorAll('.js-delivery-option').forEach((element)=>{
         const {productId, deliveryOptionId}=element.dataset;
       updateDeliveryOption(productId,deliveryOptionId);
       renderOrderSummary()
-    })
-})
+    });
+});
  }
-  
